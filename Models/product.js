@@ -11,11 +11,6 @@ const commentSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  productId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Product", // Tham chiếu đến model Product
-    required: true,
-  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -27,12 +22,6 @@ const categorySchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  products: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product", // Tham chiếu đến model Product
-    },
-  ],
 });
 const productSchema = new mongoose.Schema({
   name: {
@@ -58,12 +47,10 @@ const productSchema = new mongoose.Schema({
     ref: "Category",
     required: true,
   },
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment", // Tham chiếu đến model Comment
-    },
-  ], // Mảng bình luận
+  comments: {
+    type: [commentSchema],
+    default: [],
+  }, // Mảng bình luận
   rating: {
     type: Number,
     min: 0, // Điểm thấp nhất
@@ -82,5 +69,4 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model("Product", productSchema);
 const Category = mongoose.model("Category", categorySchema);
-const Comment = mongoose.model("Comment", commentSchema);
-module.exports = { Product, Category, Comment };
+module.exports = { Product, Category };
