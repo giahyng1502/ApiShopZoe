@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const commentSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -10,6 +9,13 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+  },
+  rate:{
+    type: Number,
+    default: 0,
+    required: true,
+    min: 0,
+    max: 5,
   },
   createdAt: {
     type: Date,
@@ -46,6 +52,16 @@ const productSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
     required: true,
+  },
+  sizes: {
+    type: [String],
+    required: true,
+    default : ["Over size"]// Mảng các size (ví dụ: ["S", "M", "L", "XL"])
+  },
+  colors: {
+    type: [String],
+    required: true,
+    default : []
   },
   comments: {
     type: [commentSchema],
