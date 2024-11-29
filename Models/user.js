@@ -1,27 +1,33 @@
 const mongoose = require('mongoose')
 const userSchema = mongoose.Schema({
-    phoneNumber : {
+    phoneNumber: {
+        type: String,
+        required: true,
+        default: "",
+    },
+    name: {
+        type: String,
+        required: true,
+        default: "",
+
+    },
+    password: {
         type: String,
         required: true,
     },
-    name : {
-        type: String,
-        required: true,
-    },
-    password : {
-        type: String,
-        required: true,
-    },
-    role : {
-        type : Boolean,
+    role: {
+        type: Boolean,
         required: true,
         default: false,
     },
-    address : {
+    address: {
         type: String,
+        default: "",
     },
-    avatar : {
+    avatar: {
         type: String,
+        default: "",
+
     }
 })
 const User = mongoose.model("User", userSchema);
