@@ -4,7 +4,6 @@ const cartController = {
     addToCart: async (req, res) => {
         const {productId, quantity, size, color} = req.body;
         const userId = req.user.userId;
-
         try {
             // Kiểm tra đầu vào
             if (!productId || !quantity || quantity <= 0) {
@@ -48,8 +47,7 @@ const cartController = {
 
             // Cập nhật tổng giá
             cart.totalPrice = cart.items.reduce((total, item) => {
-                const itemPrice = item.item.toString() === productId ? product.price : item.item.price;
-                return total + (item.quantity * itemPrice);
+                return total + (item.quantity * product.price);
             }, 0);
 
             // Lưu giỏ hàng và thực hiện populate
@@ -131,12 +129,9 @@ const cartController = {
                 }
             }
 
-            // Cập nhật tổng giá
             cart.totalPrice = cart.items.reduce((total, item) => {
-                const itemProduct = productId === item.item.toString() ? product : item.item;
-                return total + item.quantity * itemProduct.price;
+                return total + (item.quantity * product.price);
             }, 0);
-
             // Lưu giỏ hàng và thực hiện populate
             await cart.save();
             const populatedCart = await Cart.findOne({User: userId}).populate("items.item");
